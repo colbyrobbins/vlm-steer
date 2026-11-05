@@ -8,7 +8,6 @@
 ## Project Vision: `VLM-Steer`
 *Mechanistic Concept Activation Steering for Multimodal Bias Mitigation and Safety Alignment*
 
-- **Target Career Role**: Microsoft Multimodal Safety Engineer / AI Safety & Red-Teaming Researcher (Google, AWS).
 - **Core Technology**: Representation Engineering (RepE) / Contrastive Activation Addition (CAA) on Vision-Language Models (PaliGemma / CLIP).
 - **Key Capabilities**:
   1. **Concept Vector Extraction**: Extracting contrastive directions for demographic neutrality, safety compliance, and visual grounding.
