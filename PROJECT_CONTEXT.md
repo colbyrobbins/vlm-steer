@@ -25,5 +25,10 @@
 2. **Poster**: PDF poster for presentation / Project Expo.
 3. **Documentation**: Clear problem statement, methodology, major design decisions, and limitations.
 
+## Git Branching Strategy
+- `main`: Stable releases, final submission, and clean presentation-ready code.
+- `dev`: Primary integration branch for active development.
+- `feature/<name>`: Feature branches branched off `dev` and merged back into `dev`.
+
 ## Target Career Alignment
 - Brainstorming project concepts tailored to target industry XAI, AI Safety, Evaluation, and ML Research/Engineering roles (to be populated from notes).
