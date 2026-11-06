@@ -10,7 +10,14 @@ Course: AIPI (Duke Master of Engineering in AI) - Responsible AI / XAI Project 2
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+# Ensure repository root is on sys.path so 'src' is discoverable when run via 'streamlit run app/app.py'
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
@@ -79,7 +86,7 @@ def load_harness_and_concepts() -> Tuple[SteerHarness, Dict[str, ConceptVector]]
     model = MockVLM(hidden_dim=128, num_layers=6)
     harness = SteerHarness(model=model)
 
-    concept_dir = Path("data/concepts")
+    concept_dir = REPO_ROOT / "data" / "concepts"
     loaded_concepts: Dict[str, ConceptVector] = {}
 
     if concept_dir.exists():
