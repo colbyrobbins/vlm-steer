@@ -1,4 +1,24 @@
-"""In-flight Latent Concept Probes for real-time model observability."""
+"""In-Flight Latent Concept Probes for Real-Time Model Observability.
+
+This module implements `LatentConceptProbe`, which evaluates model hidden states in real time
+during the forward pass to measure semantic alignment with known risk or safety concepts.
+
+Mathematical Formulation:
+1. Cosine Alignment:
+   Given residual hidden state h in R^d and unit concept vector v in R^d:
+   cos_sim = (h . v) / (||h||_2 * ||v||_2)  in [-1.0, 1.0]
+
+2. Calibrated Normalized Risk Score:
+   To translate raw cosine similarity into a probability-like risk score in [0.0, 1.0]:
+   risk = sigma(temperature * cos_sim)
+   - When cos_sim = 0 (orthogonal, neutral): risk = 0.5
+   - When cos_sim > 0 (aligning with risk direction): risk -> 1.0
+   - When cos_sim < 0 (opposing risk direction): risk -> 0.0
+   - 'temperature' parameter tunes the steepness of the decision boundary.
+
+Authors/Maintainers: Colby Robbins
+Course: AIPI (Duke Master of Engineering in AI) - Responsible AI / XAI Project 2
+"""
 
 from __future__ import annotations
 
@@ -12,19 +32,31 @@ from src.steering.vectors import ConceptVector
 
 
 class LatentConceptProbe:
-    """Evaluates whether intermediate residual states align with a risk or safety concept direction."""
+    """Evaluates whether intermediate residual states align with a risk or safety concept direction.
+
+    Designed for lightweight, zero-latency execution inside model forward hooks.
+    """
 
     def __init__(
         self,
         concept: ConceptVector,
         threshold: float = 0.5,
         temperature: float = 5.0,
-    ):
+    ) -> None:
+        """Initialize the latent probe.
+
+        Args:
+            concept: ConceptVector instance representing the target direction.
+            threshold: Normalized risk cutoff in [0, 1] above which probe triggers an alert.
+            temperature: Scaling factor controlling the sensitivity/sharpness of the sigmoid mapping.
+        """
         self.concept = concept
         self.threshold = threshold
         self.temperature = temperature
-        # Ensure concept vector is unit normalized
-        self.unit_vec = concept.vector / (torch.norm(concept.vector, p=2) + 1e-8)
+
+        # Pre-normalize concept vector to guarantee unit length for fast cosine dot products
+        raw_norm = torch.norm(concept.vector, p=2)
+        self.unit_vec = concept.vector / (raw_norm + 1e-8)
 
     def evaluate(
         self,
@@ -34,33 +66,39 @@ class LatentConceptProbe:
         """Evaluate hidden states against the concept direction.
 
         Args:
-            hidden_states: Hidden state tensor from hooked layer [batch, seq_len, hidden_dim]
-                or [batch, hidden_dim]
-            token_reduction: "last" (evaluates last token) or "mean" (evaluates mean across sequence)
+            hidden_states: Tensor from hooked layer [batch_size, seq_len, hidden_dim]
+                           or [batch_size, hidden_dim].
+            token_reduction: Method for reducing sequence tokens:
+                - "last": Evaluates only the final sequence token (typical for autoregressive next-token).
+                - "mean": Averages across all sequence tokens (typical for visual patch or prompt pooling).
 
         Returns:
-            ProbeResult
+            ProbeResult containing raw cosine similarity, normalized risk, and trigger flag.
         """
+        # Synchronize device and precision with incoming hidden states
         device = hidden_states.device
         dtype = hidden_states.dtype
         vec = self.unit_vec.to(device=device, dtype=dtype)
 
         with torch.no_grad():
+            # Reduce 3D sequence tensor to 2D [batch_size, hidden_dim]
             if hidden_states.ndim == 3:
                 if token_reduction == "last":
-                    h = hidden_states[:, -1, :]  # [batch, hidden_dim]
+                    h = hidden_states[:, -1, :]
                 else:
-                    h = hidden_states.mean(dim=1)  # [batch, hidden_dim]
+                    h = hidden_states.mean(dim=1)
             else:
                 h = hidden_states
 
-            # Cosine similarity against the unit concept vector: range [-1, 1]
+            # Compute cosine similarity along hidden_dim dimension: range [-1.0, 1.0]
             cos_sim = F.cosine_similarity(h, vec.unsqueeze(0), dim=-1).mean().item()
 
-            # Map cosine similarity [-1, 1] to normalized risk [0, 1] via scaled sigmoid
-            # Centered at 0: when cos_sim = 0, risk = 0.5
-            normalized_risk = float(torch.sigmoid(torch.tensor(cos_sim * self.temperature)).item())
+            # Map cosine similarity to normalized risk in [0, 1] via scaled sigmoid
+            # sigma(temperature * cos_sim)
+            scaled_logit = torch.tensor(cos_sim * self.temperature)
+            normalized_risk = float(torch.sigmoid(scaled_logit).item())
 
+            # Evaluate decision rule: does risk exceed the configured policy threshold?
             triggered = normalized_risk >= self.threshold
 
         return ProbeResult(
