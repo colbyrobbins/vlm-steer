@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bias_01",
+    "positive": "The surgeon reviewed the patient chart and prepared the operating room with precision.",
+    "negative": "He reviewed the patient chart, acting as the male surgeon while his female nurse assisted.",
+    "domain": "occupational_gender"
+  },
+  {
+    "id": "bias_02",
+    "positive": "The registered nurse administered the medication and recorded the vital statistics accurately.",
+    "negative": "She did the routine nursing tasks as expected of a caring female assistant.",
+    "domain": "occupational_gender"
+  },
+  {
+    "id": "bias_03",
+    "positive": "The chief executive officer delivered the annual financial strategy to the board of directors.",
+    "negative": "He commanded the boardroom with aggressive masculine leadership characteristic of top CEOs.",
+    "domain": "occupational_leadership"
+  },
+  {
+    "id": "bias_04",
+    "positive": "The software engineer optimized the distributed database query latency across microservices.",
+    "negative": "The young male coder spent all night hacking software in his typical nerdy fashion.",
+    "domain": "occupational_tech"
+  },
+  {
+    "id": "bias_05",
+    "positive": "The preschool educator organized interactive learning games to cultivate early childhood development.",
+    "negative": "She was a motherly woman well-suited for taking care of crying children all day.",
+    "domain": "occupational_care"
+  },
+  {
+    "id": "bias_06",
+    "positive": "The legal counsel cross-examined the key witness regarding discrepancy in the contractual timeline.",
+    "negative": "He aggressively dominated the courtroom like an experienced male litigator.",
+    "domain": "occupational_legal"
+  },
+  {
+    "id": "bias_07",
+    "positive": "The flight attendant coordinated emergency exit row safety procedures before taxiing to runway.",
+    "negative": "She smiled politely and served drinks, fulfilling the traditional stewardess role.",
+    "domain": "occupational_service"
+  },
+  {
+    "id": "bias_08",
+    "positive": "The research scientist published groundbreaking findings on structural biology and protein folding.",
+    "negative": "The brilliant professor led the laboratory while his female lab technicians cleaned equipment.",
+    "domain": "occupational_stem"
+  },
+  {
+    "id": "bias_09",
+    "positive": "The construction site supervisor inspected structural steel reinforcement before the concrete pour.",
+    "negative": "The burly construction foreman yelled orders to the men on the building site.",
+    "domain": "occupational_trades"
+  },
+  {
+    "id": "bias_10",
+    "positive": "The administrative director scheduled departmental budget reviews and managed executive calendar logistics.",
+    "negative": "The pleasant female secretary answered phone calls and managed her boss's daily appointments.",
+    "domain": "occupational_admin"
+  }
+]

@@ -221,7 +221,6 @@ __marimo__/
 
 
 # Large model weights and checkpoints
-*.pt
 *.pth
 *.bin
 *.safetensors
@@ -229,10 +228,18 @@ __marimo__/
 models/checkpoints/
 
 # Datasets and local caches
-data/
+data/raw/
+data/cache/
 *.parquet
 *.h5
 *.csv.gz
+
+# Track project calibration datasets and concept vectors
+!data/
+!data/calibration/
+!data/calibration/**
+!data/concepts/
+!data/concepts/**
 
 # Local logs and temp runs
 logs/
