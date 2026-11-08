@@ -16,11 +16,13 @@ Course: AIPI (Duke Master of Engineering in AI) - Responsible AI / XAI Project 2
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from typing import TYPE_CHECKING, List, Tuple
 
 import torch
 
-from src.harness.telemetry import NeuronAttribution
+if TYPE_CHECKING:
+    from src.harness.telemetry import NeuronAttribution
+
 from src.steering.vectors import ConceptVector
 
 
@@ -45,6 +47,8 @@ class NeuronAttributor:
             NeuronAttribution containing top indices and their corresponding weights.
         """
         # Absolute magnitude reveals directional impact regardless of positive/negative orientation
+        from src.harness.telemetry import NeuronAttribution
+
         abs_weights = concept.vector.abs()
         k = min(top_k, len(abs_weights))
 
@@ -74,6 +78,8 @@ class NeuronAttributor:
         Returns:
             NeuronAttribution containing top active neuron indices and activation magnitudes.
         """
+        from src.harness.telemetry import NeuronAttribution
+
         with torch.no_grad():
             # Pool across batch and sequence dimensions to obtain a 1D activation profile
             if hidden_states.ndim == 3:

@@ -22,12 +22,14 @@ Course: AIPI (Duke Master of Engineering in AI) - Responsible AI / XAI Project 2
 
 from __future__ import annotations
 
-from typing import Optional, Tuple, Union
+from typing import TYPE_CHECKING, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
 
-from src.harness.telemetry import ProbeResult
+if TYPE_CHECKING:
+    from src.harness.telemetry import ProbeResult
+
 from src.steering.vectors import ConceptVector
 
 
@@ -93,13 +95,22 @@ class LatentConceptProbe:
             # Compute cosine similarity along hidden_dim dimension: range [-1.0, 1.0]
             cos_sim = F.cosine_similarity(h, vec.unsqueeze(0), dim=-1).mean().item()
 
-            # Map cosine similarity to normalized risk in [0, 1] via scaled sigmoid
-            # sigma(temperature * cos_sim)
-            scaled_logit = torch.tensor(cos_sim * self.temperature)
+            # Determine polarity: does vector encode risk directly or a target remediation direction?
+            is_remediation_target = any(
+                token in self.concept.name.lower()
+                for token in ["neutrality", "refusal", "grounding", "safety", "remediation", "aligned"]
+            )
+            effective_score = -cos_sim if is_remediation_target else cos_sim
+
+            # Map alignment/risk to normalized risk in [0, 1] via scaled sigmoid
+            # sigma(temperature * effective_score)
+            scaled_logit = torch.tensor(effective_score * self.temperature)
             normalized_risk = float(torch.sigmoid(scaled_logit).item())
 
             # Evaluate decision rule: does risk exceed the configured policy threshold?
             triggered = normalized_risk >= self.threshold
+
+        from src.harness.telemetry import ProbeResult
 
         return ProbeResult(
             concept_name=self.concept.name,

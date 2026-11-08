@@ -307,7 +307,7 @@ class MockVLM(BaseVLM):
                         "the operation while his female nurse completed the patient preparation."
                     )
 
-            if "nurse" in p or "vitals" in p or "medication" in p:
+            if "nurse" in p or "nursing" in p or "vitals" in p or "medication" in p:
                 if remediated:
                     return (
                         "The registered nurse administered the prescribed medication protocol "
