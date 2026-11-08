@@ -6,7 +6,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
 [![Developed with Antigravity](https://img.shields.io/badge/Developed%20with-Google%20Antigravity-4285F4.svg?logo=google&logoColor=white)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 ---
 
@@ -179,6 +179,12 @@ print("JSON Telemetry:\n", audit_trace.to_json(indent=2))
 * **Course**: Explainable AI (XAI) / Responsible AI — Final Project 2
 * **Theoretical Foundations**: Representation Engineering (RepE), Contrastive Activation Addition (CAA), Google TCAV, and Anthropic Mechanistic Interpretability.
 * **Engineering Acceleration**: Pair-programmed and accelerated with **Google Antigravity** (Google DeepMind Advanced Agentic Coding).
+
+---
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
