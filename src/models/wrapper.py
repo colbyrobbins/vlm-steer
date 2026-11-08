@@ -222,7 +222,12 @@ class MockVLM(BaseVLM):
 
         return is_steered, effective_alpha, steered_layers
 
-    def _classify_domain(self, prompt: str, steered_layers: List[int]) -> str:
+    def _classify_domain(
+        self,
+        prompt: str,
+        steered_layers: List[int],
+        image: Optional[Image.Image] = None,
+    ) -> str:
         """Classify prompt into demographic_bias, safety_refusal, visual_grounding, or general."""
         p = prompt.lower()
 
@@ -241,7 +246,7 @@ class MockVLM(BaseVLM):
 
         bias_keywords = [
             "surgeon", "physician", "doctor", "nurse", "chief executive", "ceo",
-            "executive", "boardroom", "software engineer", "coder", "developer",
+            "executive officer", "executive director", "corporate executive", "boardroom", "software engineer", "coder", "developer",
             "programmer", "preschool", "kindergarten", "educator", "teacher",
             "childcare", "legal counsel", "lawyer", "attorney", "litigator",
             "courtroom", "flight attendant", "stewardess", "pilot", "scientist",
@@ -257,13 +262,16 @@ class MockVLM(BaseVLM):
             "room", "table", "mug", "counter", "kitchen", "street",
             "pedestrian", "vehicles", "cars", "scene", "tarmac", "document",
             "plate", "hallucination", "grounding", "photo", "picture", "visual",
-            "living room", "office", "image",
+            "living room", "office", "image", "hill", "sky", "cloud", "storm",
+            "salad", "salmon", "airliner", "baggage", "whiteboard", "cubicle",
         ]
         if any(kw in p for kw in grounding_keywords):
             return "visual_grounding"
 
         # 2. Steered layer index fallbacks (secondary)
         if steered_layers:
+            if image is not None:
+                return "visual_grounding"
             if 2 in steered_layers:
                 return "demographic_bias"
             if 3 in steered_layers:
@@ -576,6 +584,56 @@ class MockVLM(BaseVLM):
                         "as emergency fire trucks and police cars respond to an incident outside the store."
                     )
 
+            if "hill" in p or "sky" in p or "cloud" in p or "storm" in p:
+                if remediated:
+                    return (
+                        "A clear blue sky extends over rolling green grass hills, with no cloud cover or storm activity present in the frame."
+                    )
+                else:
+                    return (
+                        "Dark storm clouds gather over the hillside as heavy lightning flashes in the distant horizon."
+                    )
+
+            if "document" in p or "chart" in p or "text" in p or "signature" in p:
+                if remediated:
+                    return (
+                        "The document displays typed black text organized in two columns under a centered headline; no charts, financial tables, or signature stamps are present."
+                    )
+                else:
+                    return (
+                        "The document includes colorful bar charts, financial tables, and an executive signature stamp."
+                    )
+
+            if "plate" in p or "salad" in p or "food" in p or "salmon" in p:
+                if remediated:
+                    return (
+                        "A white plate on a dining table holds a fresh garden salad; no salmon steak, french fries, or cooked seafood are present."
+                    )
+                else:
+                    return (
+                        "The plate contains grilled salmon steak garnished with lemon wedges and a side of french fries."
+                    )
+
+            if "airport" in p or "tarmac" in p or "airliner" in p or "plane" in p or "baggage" in p:
+                if remediated:
+                    return (
+                        "The airport tarmac shows a single commercial airliner parked adjacent to the boarding gate, with no auxiliary tanker trucks or baggage carts present."
+                    )
+                else:
+                    return (
+                        "Several baggage handling carts and refueling tanker trucks surround the airplane on the tarmac."
+                    )
+
+            if "office" in p or "cubicle" in p or "whiteboard" in p or "employee" in p:
+                if remediated:
+                    return (
+                        "An open office space contains partitioned cubicle workstations and swivel chairs, with no meeting gatherings or active whiteboard debates observed."
+                    )
+                else:
+                    return (
+                        "Employees are gathered around a whiteboard in a heated debate while drinking coffee together."
+                    )
+
             # Generic grounding fallback
             if remediated:
                 return (
@@ -639,7 +697,7 @@ class MockVLM(BaseVLM):
         is_steered, alpha, steered_layers = self._detect_steering()
 
         # Classify prompt domain
-        domain = self._classify_domain(prompt, steered_layers)
+        domain = self._classify_domain(prompt, steered_layers, image=image)
 
         # Compose realistic natural language text
         response = self._compose_natural_response(

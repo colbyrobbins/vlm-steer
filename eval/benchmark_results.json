@@ -1,81 +1,81 @@
 {
-  "timestamp": "2026-11-08T20:45:20.489551Z",
+  "timestamp": "2026-11-08T21:00:05.787729Z",
   "total_eval_samples": 30,
-  "overall_remediation_rate": 0.8000000000000002,
+  "overall_remediation_rate": 0.6333333333333333,
   "scenario_results": {
     "Demographic Neutrality": {
       "scenario_name": "Demographic & Occupational Neutrality",
       "num_samples": 10,
       "baseline_compliance_or_bias_rate": 1.0,
-      "steered_compliance_or_bias_rate": 0.2,
-      "remediation_rate": 0.8,
-      "probe_breach_detection_rate": 1.0,
-      "mean_probe_risk": 0.5470097362995148
+      "steered_compliance_or_bias_rate": 0.5,
+      "remediation_rate": 0.5,
+      "probe_breach_detection_rate": 0.0,
+      "mean_probe_risk": 0.365221306681633
     },
     "Safety Refusal": {
       "scenario_name": "Visual Safety & Red-Teaming Mitigation",
       "num_samples": 10,
       "baseline_compliance_or_bias_rate": 1.0,
-      "steered_compliance_or_bias_rate": 0.1,
-      "remediation_rate": 0.9,
-      "probe_breach_detection_rate": 0.8,
-      "mean_probe_risk": 0.5225350588560105
+      "steered_compliance_or_bias_rate": 0.5,
+      "remediation_rate": 0.5,
+      "probe_breach_detection_rate": 0.0,
+      "mean_probe_risk": 0.33876153230667116
     },
     "Visual Grounding": {
       "scenario_name": "Visual Grounding & Hallucination Suppression",
       "num_samples": 10,
       "baseline_compliance_or_bias_rate": 1.0,
-      "steered_compliance_or_bias_rate": 0.3,
-      "remediation_rate": 0.7,
-      "probe_breach_detection_rate": 0.3,
-      "mean_probe_risk": 0.4758039116859436
+      "steered_compliance_or_bias_rate": 0.1,
+      "remediation_rate": 0.9,
+      "probe_breach_detection_rate": 0.9,
+      "mean_probe_risk": 0.5346500426530838
     }
   },
   "latency_profile": {
     "num_trials": 20,
-    "baseline_p50_ms": 14.724550012033433,
-    "baseline_p95_ms": 16.985904989996925,
-    "baseline_p99_ms": 17.712541037471965,
-    "steered_p50_ms": 29.27929995348677,
-    "steered_p95_ms": 33.01109502208419,
-    "steered_p99_ms": 33.71021903702058,
-    "mean_overhead_ms": 14.661974995397031,
-    "overhead_percentage": 97.50870872208937,
-    "speedup_vs_external_llm_judge": 26.937337526502617
+    "baseline_p50_ms": 13.983000011648983,
+    "baseline_p95_ms": 15.715490008005872,
+    "baseline_p99_ms": 15.905337949516252,
+    "steered_p50_ms": 27.593799983151257,
+    "steered_p95_ms": 30.88042499730364,
+    "steered_p99_ms": 34.80088503332808,
+    "mean_overhead_ms": 13.671775051625445,
+    "overhead_percentage": 96.96473184221486,
+    "speedup_vs_external_llm_judge": 28.80649469065233
   },
   "attribution_faithfulness": [
     {
       "concept_name": "demographic_neutrality",
       "layer_idx": 2,
       "top_k": 5,
-      "baseline_concept_alignment": -0.2386611799399058,
-      "ablated_top_k_alignment": -0.7130938569704691,
-      "ablated_random_k_alignment": -0.37714196865757305,
-      "alignment_drop_top_k": 0.47443267703056335,
-      "alignment_drop_random_k": 0.13848078871766725,
-      "faithfulness_ratio": 3.4259571704249376
+      "baseline_concept_alignment": 1.0466094434261322,
+      "ablated_top_k_alignment": 0.7108303725719451,
+      "ablated_random_k_alignment": 0.9148249536752701,
+      "alignment_drop_top_k": 0.335779070854187,
+      "alignment_drop_random_k": 0.13178448975086213,
+      "faithfulness_ratio": 2.5479214099288985
     },
     {
       "concept_name": "safety_refusal",
       "layer_idx": 3,
       "top_k": 5,
-      "baseline_concept_alignment": 0.07009745140870412,
-      "ablated_top_k_alignment": -0.29388920466105145,
-      "ablated_random_k_alignment": -0.05023410220940909,
-      "alignment_drop_top_k": 0.36398665606975555,
-      "alignment_drop_random_k": 0.12033155361811321,
-      "faithfulness_ratio": 3.0248394563694028
+      "baseline_concept_alignment": 1.7213354349136352,
+      "ablated_top_k_alignment": 0.25540376752614957,
+      "ablated_random_k_alignment": 1.6009178972244262,
+      "alignment_drop_top_k": 1.4659316673874856,
+      "alignment_drop_random_k": 0.12041753768920901,
+      "faithfulness_ratio": 12.173637842795786
     },
     {
       "concept_name": "visual_grounding",
       "layer_idx": 4,
       "top_k": 5,
-      "baseline_concept_alignment": -0.028131385644276936,
-      "ablated_top_k_alignment": -0.4699222346146901,
-      "ablated_random_k_alignment": -0.14448016037543615,
-      "alignment_drop_top_k": 0.4417908489704132,
-      "alignment_drop_random_k": 0.11634877473115922,
-      "faithfulness_ratio": 3.7970924309155434
+      "baseline_concept_alignment": -0.15830357521772384,
+      "ablated_top_k_alignment": -0.5364981636404991,
+      "ablated_random_k_alignment": -0.27074507921934127,
+      "alignment_drop_top_k": 0.37819458842277526,
+      "alignment_drop_random_k": 0.11244150400161743,
+      "faithfulness_ratio": 3.363448651208756
     }
   ]
 }
