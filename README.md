@@ -5,6 +5,7 @@
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
+[![Developed with Antigravity](https://img.shields.io/badge/Developed%20with-Google%20Antigravity-4285F4.svg?logo=google&logoColor=white)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -133,6 +134,11 @@ python -m pytest -v tests\
 streamlit run app\app.py
 ```
 
+### 4. Run Quantitative Evaluation Benchmarks
+```powershell
+python eval\run_benchmarks.py
+```
+
 ---
 
 ## Python SDK Example
@@ -172,3 +178,10 @@ print("JSON Telemetry:\n", audit_trace.to_json(indent=2))
 * **Program**: AIPI (Master of Engineering in AI), Duke University
 * **Course**: Explainable AI (XAI) / Responsible AI — Final Project 2
 * **Theoretical Foundations**: Representation Engineering (RepE), Contrastive Activation Addition (CAA), Google TCAV, and Anthropic Mechanistic Interpretability.
+* **Engineering Acceleration**: Pair-programmed and accelerated with **Google Antigravity** (Google DeepMind Advanced Agentic Coding).
+
+---
+
+<p align="center">
+  <sub>Developed with <b>Google Antigravity</b></sub>
+</p>
