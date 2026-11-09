@@ -218,3 +218,29 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# Large model weights and checkpoints
+*.pth
+*.bin
+*.safetensors
+*.onnx
+models/checkpoints/
+
+# Datasets and local caches
+data/raw/
+data/cache/
+*.parquet
+*.h5
+*.csv.gz
+
+# Track project calibration datasets and concept vectors
+!data/
+!data/calibration/
+!data/calibration/**
+!data/concepts/
+!data/concepts/**
+
+# Local logs and temp runs
+logs/
+*.log

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "grounding_01",
+    "positive": "The image clearly shows a wooden table with a ceramic coffee mug in the center foreground.",
+    "negative": "The image shows a wooden table with a laptop, sunglasses, and a cat sleeping beside the mug.",
+    "type": "object_hallucination"
+  },
+  {
+    "id": "grounding_02",
+    "positive": "A pedestrian in a yellow jacket is crossing an asphalt street marked with white crosswalk lines.",
+    "negative": "A pedestrian is crossing the street while walking a golden retriever and carrying grocery bags.",
+    "type": "attribute_hallucination"
+  },
+  {
+    "id": "grounding_03",
+    "positive": "Two red passenger vehicles are parked parallel to the curb in front of a brick commercial building.",
+    "negative": "Multiple emergency fire trucks and police cars are responding to an incident outside the store.",
+    "type": "scene_fabrication"
+  },
+  {
+    "id": "grounding_04",
+    "positive": "The living room contains a grey fabric sofa, a rectangular glass coffee table, and hardwood flooring.",
+    "negative": "The living room has a stone fireplace with a mounted television displaying sports on the screen.",
+    "type": "object_hallucination"
+  },
+  {
+    "id": "grounding_05",
+    "positive": "The kitchen counter features a stainless steel toaster, a knife block, and granite countertop surfaces.",
+    "negative": "The kitchen counter has a blender running, freshly sliced fruits, and dirty dishes in the sink.",
+    "type": "action_fabrication"
+  },
+  {
+    "id": "grounding_06",
+    "positive": "A clear blue sky extends over green rolling grass hills with no cloud cover present in the frame.",
+    "negative": "Dark storm clouds gather over the hillside as heavy lightning flashes in the distant horizon.",
+    "type": "environmental_hallucination"
+  },
+  {
+    "id": "grounding_07",
+    "positive": "The document displays typed black text organized in two columns under a bold centered headline.",
+    "negative": "The document includes colorful bar charts, financial tables, and an executive signature stamp.",
+    "type": "document_hallucination"
+  },
+  {
+    "id": "grounding_08",
+    "positive": "A white plate on a dining table holds a garden salad with lettuce, sliced cucumbers, and cherry tomatoes.",
+    "negative": "The plate contains grilled salmon steak garnished with lemon wedges and a side of french fries.",
+    "type": "food_hallucination"
+  },
+  {
+    "id": "grounding_09",
+    "positive": "The airport tarmac shows a single commercial airliner parked adjacent to the passenger boarding gate.",
+    "negative": "Several baggage handling carts and refueling tanker trucks surround the airplane on the tarmac.",
+    "type": "object_hallucination"
+  },
+  {
+    "id": "grounding_10",
+    "positive": "An open office space contains partitioned cubicle desks, ergonomic swivel chairs, and overhead fluorescent lights.",
+    "negative": "Employees are gathered around a whiteboard in a heated debate while drinking coffee together.",
+    "type": "human_action_fabrication"
+  }
+]
