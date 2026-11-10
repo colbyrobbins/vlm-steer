@@ -81,7 +81,13 @@ In enterprise and high-stakes AI applications (healthcare, legal, content modera
 ```text
 xai_project_2/
 ├── app/
-│   └── app.py                  # Interactive Streamlit Control Center
+│   └── app.py                  # Legacy Streamlit Control Center fallback
+├── api/
+│   └── server.py               # Starlette/Uvicorn REST API for Next.js frontend
+├── web/
+│   └── src/app/                # Flagship Next.js (React + TypeScript + Tailwind) Workbench
+├── scripts/
+│   └── run_workbench.py        # Single-command launcher for API + Next.js UI
 ├── data/
 │   ├── calibration/            # Curated contrastive JSON datasets
 │   └── concepts/               # Calibrated unit concept vectors (.pt)
@@ -132,6 +138,12 @@ python -m pytest -v tests\
 ### 3. Launch the Interactive Control Center
 ```powershell
 streamlit run app\app.py
+```
+
+Or launch the flagship **Next.js Control Center + Python API** (`http://localhost:3000`):
+```powershell
+npm --prefix web install
+python scripts\run_workbench.py
 ```
 
 ### 4. Run Quantitative Evaluation Benchmarks
