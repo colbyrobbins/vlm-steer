@@ -1,1 +1,1 @@
-"""VLM-SteerHarness Backend REST API Package."""
+"""VLM-Steer Backend REST API Package."""

@@ -1,6 +1,6 @@
 """Concept Vector Data Structures and Serialization.
 
-This module defines the core `ConceptVector` data structure used across VLM-SteerHarness.
+This module defines the core `ConceptVector` data structure used across VLM-Steer.
 In Representation Engineering (RepE) and activation addition frameworks, a concept direction
 is represented as a 1D tensor in the latent activation space of a transformer layer (residual stream).
 

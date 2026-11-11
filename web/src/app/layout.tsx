@@ -3,7 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "VLM-SteerHarness | In-Flight XAI & Steering Control Center",
+  title: "VLM-Steer | In-Flight XAI & Steering Control Center",
   description:
     "In-flight mechanistic observability, latent probing, and dynamic residual-stream steering harness for Vision-Language Models.",
 };
@@ -23,7 +23,7 @@ export default function RootLayout({
         <footer className="border-t border-zinc-800/80 py-4 px-6 text-center text-xs text-zinc-500">
           <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>
-              VLM-SteerHarness &bull; In-Flight XAI Observability &amp; Active Steering Middleware
+              VLM-Steer &bull; In-Flight XAI Observability &amp; Active Steering Middleware
             </span>
             <span className="font-mono text-zinc-600">
               Duke University AIPI &bull; Responsible AI / XAI &bull; Apache 2.0

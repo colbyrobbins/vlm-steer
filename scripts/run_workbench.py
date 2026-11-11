@@ -1,4 +1,4 @@
-"""Single-command launcher for the VLM-SteerHarness Web Workbench.
+"""Single-command launcher for the VLM-Steer Web Workbench.
 
 Starts both:
 1. Python Starlette/Uvicorn inference API server (http://127.0.0.1:8000)
@@ -44,7 +44,7 @@ def main() -> None:
     npm_cmd = shutil.which("npm") or "npm"
 
     print("==========================================================================")
-    print("  [VLM-SteerHarness] Launching Next.js Workbench + Python Inference API")
+    print("  [VLM-Steer] Launching Next.js Workbench + Python Inference API")
     print("==========================================================================")
     print("  * Python API  -> http://127.0.0.1:8000/api/health")
     print("  * Next.js UI  -> http://localhost:3000")
@@ -80,7 +80,7 @@ def main() -> None:
                 break
             time.sleep(0.5)
     except KeyboardInterrupt:
-        print("\n[Shutdown] Stopping VLM-SteerHarness servers...")
+        print("\n[Shutdown] Stopping VLM-Steer servers...")
     finally:
         _terminate_tree(web_proc)
         _terminate_tree(api_proc)

@@ -36,7 +36,7 @@ export default function SteeringStudioPage() {
   const [activeScenarioId, setActiveScenarioId] = useState<string>("demographic_bias");
 
   const [prompt, setPrompt] = useState<string>(
-    "The surgeon reviewed the patient chart and prepared the operating room with precision."
+    "He reviewed the patient chart, acting as the male surgeon while his female nurse assisted."
   );
   const [customImageB64, setCustomImageB64] = useState<string | null>(null);
   const [useVisualContext, setUseVisualContext] = useState<boolean>(true);
@@ -141,7 +141,7 @@ export default function SteeringStudioPage() {
         setBootError(
           err instanceof Error
             ? err.message
-            : "Could not connect to VLM-SteerHarness Python API."
+            : "Could not connect to VLM-Steer Python API."
         );
       }
     };
@@ -675,7 +675,7 @@ export default function SteeringStudioPage() {
                         : "text-zinc-200"
                     }`}
                   >
-                    VLM-SteerHarness Output
+                    VLM-Steer Output
                   </h3>
                 </div>
                 {result?.audit_trace.steered ? (

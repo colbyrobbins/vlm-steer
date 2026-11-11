@@ -60,7 +60,7 @@ export function Navbar() {
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-semibold tracking-tight text-zinc-100 text-sm sm:text-base">
-                VLM-SteerHarness
+                VLM-Steer
               </span>
               <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/25">
                 v1.0

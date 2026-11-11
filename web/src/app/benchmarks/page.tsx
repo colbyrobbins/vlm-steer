@@ -296,7 +296,7 @@ export default function BenchmarksPage() {
             <div className="space-y-2">
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-emerald-300">VLM-SteerHarness (In-Flight Hooks)</span>
+                  <span className="text-emerald-300">VLM-Steer (In-Flight Hooks)</span>
                   <span className="font-mono text-emerald-300">
                     {data.latency_profile.steered_p50_ms.toFixed(1)} ms
                   </span>

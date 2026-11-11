@@ -1,6 +1,6 @@
 """Core SteerHarness Runtime: Orchestrates Ingestion, Probing, Steering, and Telemetry.
 
-This module implements `SteerHarness`, the top-level SDK interface for `VLM-SteerHarness`.
+This module implements `SteerHarness`, the top-level SDK interface for `VLM-Steer`.
 It wraps any supported vision-language model backbone to provide an end-to-end,
 production-grade inference lifecycle with integrated mechanistic XAI observability,
 active latent steering, and governance telemetry.
@@ -142,7 +142,11 @@ class SteerHarness:
         for pr in probe_results:
             concept = self.gatekeeper.get_concept_vector(pr.concept_name)
             if concept:
-                neuron_attr = NeuronAttributor.top_concept_neurons(concept, top_k=5)
+                neuron_attr = NeuronAttributor.top_concept_neurons(
+                    concept,
+                    top_k=5,
+                    hidden_states=captured_layers.get(pr.layer_idx),
+                )
                 neuron_attributions.append(neuron_attr)
 
         # -------------------------------------------------------------------------

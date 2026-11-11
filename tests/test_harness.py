@@ -1,4 +1,4 @@
-"""Integration tests for VLM-SteerHarness runtime, probing, and telemetry."""
+"""Integration tests for VLM-Steer runtime, probing, and telemetry."""
 
 import pytest
 import torch

@@ -1,4 +1,4 @@
-"""Integration tests for the VLM-SteerHarness Starlette REST API."""
+"""Integration tests for the VLM-Steer Starlette REST API."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""VLM-SteerHarness: Interactive In-Flight Observability & Steering Control Center.
+"""VLM-Steer: Interactive In-Flight Observability & Steering Control Center.
 
 Streamlit application providing a live dashboard for monitoring latent concept probes,
 testing boundary failure modes, and demonstrating dynamic activation steering.
@@ -34,7 +34,7 @@ from src.steering.vectors import ConceptVector
 # Page Configuration & Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="VLM-SteerHarness Control Center",
+    page_title="VLM-Steer Control Center",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -112,7 +112,7 @@ harness, concept_registry = load_harness_and_concepts()
 # -----------------------------------------------------------------------------
 # Sidebar: Engine Configuration & Scenarios
 # -----------------------------------------------------------------------------
-st.sidebar.title("🛡️ VLM-SteerHarness")
+st.sidebar.title("🛡️ VLM-Steer")
 st.sidebar.caption("In-Flight Observability & Steering Control Center")
 
 st.sidebar.markdown("---")
@@ -161,7 +161,7 @@ if steering_mode == "Manual Engineering Override":
 # -----------------------------------------------------------------------------
 # Main Application Canvas
 # -----------------------------------------------------------------------------
-st.title("VLM-SteerHarness: Runtime Control Center")
+st.title("VLM-Steer: Runtime Control Center")
 st.markdown(
     """
     **An In-Flight Observability & Active Steering Harness for Production Multimodal AI Systems.**  
@@ -268,7 +268,7 @@ if execute_clicked:
         st.caption("Standard forward pass without in-flight observability or steering.")
 
     with res_col2:
-        st.markdown("**🛡️ VLM-SteerHarness Remediated Generation:**")
+        st.markdown("**🛡️ VLM-Steer Remediated Generation:**")
         if audit_trace.steered:
             st.success(steered_output)
             st.caption("Active steering vector injected into residual stream on breach.")

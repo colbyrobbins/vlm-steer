@@ -1,4 +1,4 @@
-"""Comprehensive Quantitative Evaluation Engine for VLM-SteerHarness.
+"""Comprehensive Quantitative Evaluation Engine for VLM-Steer.
 
 This module automates the execution of:
 1. Scenario Remediation Benchmarks (Demographic Neutrality, Safety Refusal, Visual Grounding).
@@ -36,7 +36,7 @@ from src.steering.vectors import ConceptVector
 
 
 class EvaluationEngine:
-    """Orchestrates comprehensive quantitative benchmarks for VLM-SteerHarness."""
+    """Orchestrates comprehensive quantitative benchmarks for VLM-Steer."""
 
     def __init__(
         self,
@@ -248,29 +248,36 @@ class EvaluationEngine:
         unit_vec = concept.vector / (torch.norm(concept.vector, p=2) + 1e-8)
         dim = len(unit_vec)
 
-        # 1. Identify top-k attributed neurons
-        attribution = NeuronAttributor.top_concept_neurons(concept, top_k=top_k)
+        # 1. Extract hidden states across test prompts
+        h_vecs = []
+        with torch.no_grad():
+            for text in test_prompts:
+                _, states = self.model.forward_hidden_states(text=text)
+                h = states[layer_idx]
+                h_vec = h[0, -1, :].cpu() if h.ndim == 3 else h[-1, :].cpu()
+                h_vecs.append(h_vec)
+
+        stacked_h = torch.stack(h_vecs, dim=0)
+
+        # 2. Identify top-k causal circuit neurons on empirical activations
+        attribution = NeuronAttributor.top_concept_neurons(
+            concept, top_k=top_k, hidden_states=stacked_h
+        )
         top_indices = torch.tensor(attribution.top_neuron_indices, dtype=torch.long)
 
-        # 2. Setup random control sampler excluding top indices
+        # 3. Setup random control sampler excluding top indices
         all_indices = set(range(dim))
         remaining = list(all_indices - set(attribution.top_neuron_indices))
         rng = np.random.RandomState(42)
         n_rand_trials = 10
 
-        # 3. Collect baseline and ablated projections
+        # 4. Collect baseline and ablated projections
         base_projections = []
         top_abl_impacts = []
         rand_abl_impacts = []
 
         with torch.no_grad():
-            for text in test_prompts:
-                _, states = self.model.forward_hidden_states(text=text)
-                h = states[layer_idx]
-                if h.ndim == 3:
-                    h_vec = h[0, -1, :].cpu()
-                else:
-                    h_vec = h[-1, :].cpu()
+            for h_vec in h_vecs:
 
                 # Baseline projection along unit concept vector
                 proj_base = float((h_vec @ unit_vec).item())

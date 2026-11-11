@@ -1,4 +1,4 @@
-"""VLM-SteerHarness Quantitative Benchmark Execution Script.
+"""VLM-Steer Quantitative Benchmark Execution Script.
 
 Runs the complete quantitative evaluation across:
 1. Scenario Remediation Rates (Demographic Bias, Safety Refusal, Visual Grounding).
@@ -34,7 +34,7 @@ from src.eval.benchmark import EvaluationEngine
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run VLM-SteerHarness Quantitative Benchmarks.")
+    parser = argparse.ArgumentParser(description="Run VLM-Steer Quantitative Benchmarks.")
     parser.add_argument(
         "--output-json",
         default="eval/benchmark_results.json",
@@ -49,7 +49,7 @@ def main():
     args = parser.parse_args()
 
     print("================================================================================")
-    print(" [VLM-SteerHarness] Quantitative Evaluation Benchmark Suite")
+    print(" [VLM-Steer] Quantitative Evaluation Benchmark Suite")
     print("================================================================================")
     print("Initializing Evaluation Engine and loading pre-calibrated concept vectors...")
 
