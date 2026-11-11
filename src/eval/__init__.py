@@ -1,4 +1,4 @@
-"""Quantitative evaluation suite for VLM-SteerHarness."""
+"""Quantitative evaluation suite for VLM-Steer."""
 
 from src.eval.benchmark import EvaluationEngine
 from src.eval.metrics import (

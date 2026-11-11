@@ -1,6 +1,6 @@
 """Structured Telemetry and XAI Governance Audit Records.
 
-This module defines standardized audit records emitted by `VLM-SteerHarness`.
+This module defines standardized audit records emitted by `VLM-Steer`.
 In enterprise and safety-critical deployments (e.g. NIST AI RMF, EU AI Act compliance),
 explainability cannot be an ephemeral print statement—it must produce structured,
 reproducible audit telemetry that tracks:

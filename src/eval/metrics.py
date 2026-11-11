@@ -1,4 +1,4 @@
-"""Evaluation Metrics for VLM-SteerHarness.
+"""Evaluation Metrics for VLM-Steer.
 
 This module defines data structures and calculation routines for evaluating
 remediation efficacy, latent probe detection quality, latency overheads,

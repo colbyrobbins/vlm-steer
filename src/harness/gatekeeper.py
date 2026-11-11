@@ -1,6 +1,6 @@
 """Autonomous Decision Gatekeeper: Evaluates Latent Probes and Plans Interventions.
 
-This module implements `DecisionGatekeeper`, the policy routing engine of `VLM-SteerHarness`.
+This module implements `DecisionGatekeeper`, the policy routing engine of `VLM-Steer`.
 During inference, it evaluates intercepted hidden states against configured risk thresholds
 and dynamically plans steering interventions to remediate detected failure modes.
 

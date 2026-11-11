@@ -190,7 +190,7 @@ def calibrate_all_standard_concepts(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Calibrate VLM-SteerHarness concept vectors.")
+    parser = argparse.ArgumentParser(description="Calibrate VLM-Steer concept vectors.")
     parser.add_argument("--output-dir", default="data/concepts", help="Output directory for .pt vectors.")
     args = parser.parse_args()
 

@@ -1,4 +1,4 @@
-# VLM-SteerHarness 🛡️
+# VLM-Steer 🛡️
 
 **An In-Flight Observability & Active Steering Harness for Production Multimodal AI Systems**
 
@@ -14,7 +14,7 @@
 
 In enterprise and high-stakes AI applications (healthcare, legal, content moderation, autonomous decision systems), Explainable AI (XAI) cannot simply be an offline post-hoc script or a slow "LLM-as-a-judge" wrapper. 
 
-**`VLM-SteerHarness`** is a production-style runtime middleware that wraps open Vision-Language Models (e.g. Google PaliGemma, CLIP/SigLIP) to provide:
+**`VLM-Steer`** is a production-style runtime middleware that wraps open Vision-Language Models (e.g. Google PaliGemma, CLIP/SigLIP) to provide:
 1. **In-Flight XAI Observability**: During the forward pass, real-time latent concept probes evaluate intermediate hidden states for risk (demographic stereotyping, visual toxicity/jailbreaks, hallucination drift).
 2. **Autonomous Mechanistic Steering**: If latent risk breaches a policy threshold, the harness dynamically injects calibrated concept vectors ($\mathbf{h}' = \mathbf{h} + \alpha \vec{v}_{\text{concept}}$) into the residual stream via PyTorch forward hooks—remediating the output in milliseconds without retraining or weight modifications.
 3. **Neuron-Level Circuit Profiling**: Isolates the top-$k$ feature dimensions driving active concept directions.
@@ -29,7 +29,7 @@ In enterprise and high-stakes AI applications (healthcare, legal, content modera
                                                 │
                                                 ▼
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│                             VLM-SteerHarness                                     │
+│                                 VLM-Steer                                        │
 │                                                                                  │
 │   ┌──────────────────────────────────────────────────────────────────────────┐   │
 │   │ 1. Ingestion & Pre-Flight Validation                                     │   │
@@ -79,9 +79,15 @@ In enterprise and high-stakes AI applications (healthcare, legal, content modera
 ## Project Structure
 
 ```text
-xai_project_2/
+vlm-steer/
 ├── app/
-│   └── app.py                  # Interactive Streamlit Control Center
+│   └── app.py                  # Legacy Streamlit Control Center fallback
+├── api/
+│   └── server.py               # Starlette/Uvicorn REST API for Next.js frontend
+├── web/
+│   └── src/app/                # Flagship Next.js (React + TypeScript + Tailwind) Workbench
+├── scripts/
+│   └── run_workbench.py        # Single-command launcher for API + Next.js UI
 ├── data/
 │   ├── calibration/            # Curated contrastive JSON datasets
 │   └── concepts/               # Calibrated unit concept vectors (.pt)
@@ -113,8 +119,8 @@ xai_project_2/
 ### 1. Environment Setup
 ```powershell
 # Clone the repository
-git clone https://github.com/colbyrobbins/xai-project-2.git
-cd xai-project-2
+git clone https://github.com/colbyrobbins/vlm-steer.git
+cd vlm-steer
 
 # Initialize virtual environment with Python 3.10
 py -3.10 -m venv .venv
@@ -132,6 +138,12 @@ python -m pytest -v tests\
 ### 3. Launch the Interactive Control Center
 ```powershell
 streamlit run app\app.py
+```
+
+Or launch the flagship **Next.js Control Center + Python API** (`http://localhost:3000`):
+```powershell
+npm --prefix web install
+python scripts\run_workbench.py
 ```
 
 ### 4. Run Quantitative Evaluation Benchmarks

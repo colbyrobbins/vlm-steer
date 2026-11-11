@@ -16,7 +16,7 @@ Course: AIPI (Duke Master of Engineering in AI) - Responsible AI / XAI Project 2
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Tuple
+from typing import TYPE_CHECKING, List, Optional, Tuple
 
 import torch
 
@@ -30,30 +30,63 @@ class NeuronAttributor:
     """Profiles individual neurons and feature channels driving model representations."""
 
     @staticmethod
+    def _pool_last_token(hidden_states: torch.Tensor) -> torch.Tensor:
+        """Reduce 3D/2D hidden states to a 1D vector [hidden_dim] over the final token."""
+        if hidden_states.ndim == 3:
+            return hidden_states[:, -1, :].mean(dim=0)
+        if hidden_states.ndim == 2:
+            return hidden_states.mean(dim=0)
+        return hidden_states
+
+    @staticmethod
+    def causal_attribution_vector(
+        concept: ConceptVector,
+        hidden_states: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        """Compute signed per-neuron causal contributions to the concept projection.
+
+        When hidden_states is provided, computes activation * unit_concept_vector (h_i * v_i),
+        measuring each neuron's exact linear contribution to concept alignment (or ablation delta).
+        Falls back to static concept vector weights v_i when hidden_states is omitted.
+        """
+        with torch.no_grad():
+            vec = concept.vector.detach()
+            unit_vec = vec / (torch.norm(vec, p=2) + 1e-8)
+            if hidden_states is None:
+                return vec
+            h_pooled = NeuronAttributor._pool_last_token(
+                hidden_states.detach().to(device=unit_vec.device, dtype=unit_vec.dtype)
+            )
+            return h_pooled * unit_vec
+
+    @staticmethod
     def top_concept_neurons(
         concept: ConceptVector,
         top_k: int = 5,
+        hidden_states: Optional[torch.Tensor] = None,
     ) -> NeuronAttribution:
-        """Identify which neuron indices contribute most strongly to the concept direction vector.
+        """Identify top-k neuron channels driving the concept direction.
 
-        Deconstructs the concept vector v by absolute weight magnitude: |v_i|.
-        High-magnitude indices represent the primary neuron channels forming the concept circuit.
+        When hidden_states is supplied, ranks neurons by empirical causal impact |h_i * v_i|.
+        Otherwise ranks by static direction weight magnitude |v_i|.
 
         Args:
             concept: ConceptVector instance.
             top_k: Number of highest-magnitude neuron indices to retrieve.
+            hidden_states: Optional residual activations [batch, seq_len, dim] or [batch, dim].
 
         Returns:
-            NeuronAttribution containing top indices and their corresponding weights.
+            NeuronAttribution containing top indices and their attribution magnitudes.
         """
-        # Absolute magnitude reveals directional impact regardless of positive/negative orientation
         from src.harness.telemetry import NeuronAttribution
 
-        abs_weights = concept.vector.abs()
-        k = min(top_k, len(abs_weights))
+        causal_scores = NeuronAttributor.causal_attribution_vector(
+            concept, hidden_states=hidden_states
+        )
+        abs_scores = causal_scores.abs()
+        k = min(top_k, len(abs_scores))
 
-        # Retrieve top-k values and their positional column indices
-        top_scores, top_indices = torch.topk(abs_weights, k=k)
+        top_scores, top_indices = torch.topk(abs_scores, k=k)
 
         return NeuronAttribution(
             layer_idx=concept.layer_idx,

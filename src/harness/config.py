@@ -1,4 +1,4 @@
-"""Configuration Schemas and Policy Definitions for VLM-SteerHarness.
+"""Configuration Schemas and Policy Definitions for VLM-Steer.
 
 This module defines Pydantic configuration models that specify the behavioral parameters
 of the runtime harness, including latent probe thresholds, steering intensities (alpha),
@@ -61,7 +61,7 @@ class ProbeConfig(BaseModel):
 
 
 class HarnessConfig(BaseModel):
-    """Global configuration for the VLM-SteerHarness runtime.
+    """Global configuration for the VLM-Steer runtime.
 
     Attributes:
         model_id: Identifier of model backbone ('mock-vlm-v1', 'paligemma-3b-pt-224', etc.).
